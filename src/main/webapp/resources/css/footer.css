@@ -1,0 +1,38 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+
+#footer {
+	position: relative;
+	margin-top: 163px;
+	background:
+		url("https://www.bhdstar.vn/wp-content/themes/bhd/assets/images/bg-grid.jpg")
+		top center repeat;
+	color: #fff;
+	display: flex;
+	align-items: center;
+	display: block;
+}
+
+.quy-dinh-va-dieu-khoan {
+	margin-top: 15px;
+	margin-left: 100px;
+	font: inherit;
+}
+
+#menu-dieu-khoan-su-dung li a {
+	text-decoration: none;
+}
+
+li a:hover {
+	color: red;
+}
+
+.customer-cgv {
+	width: 100%;
+	text-align: center;
+	padding: 10px 0px;
+	background-color: #e7e2e2;
+	color: #636363;
+}

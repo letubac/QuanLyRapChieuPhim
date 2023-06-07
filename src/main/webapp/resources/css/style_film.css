@@ -1,0 +1,155 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+a{
+    text-decoration: none;
+    color: #000;
+}
+hr{
+    height: 1px;
+    background-color: #42af33;
+    border: none;
+}
+.fixed{
+    /* display: block; */
+    /* position: fixed; */
+    /* top: 0; */
+}
+.main-container{
+    position: relative;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url(http://localhost:8080/QuanLyRapChieuPhim/resources/imgs/movie-details-bg.jpg);
+    color: #fff;
+    background-position: top;
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+.container-movie{
+    max-width: 100%;
+    margin: 50px 200px 0 200px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 30px;
+}
+.link-container{
+    max-width: 100%;
+    margin: 0px 260px 20px 260px;
+    display: flex;
+    border-radius: 5px;
+    justify-content: space-between;
+    align-items: center;
+}
+.link{
+    color: #666;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+}
+.link:hover{
+    color: #fff;
+}
+.movie-title{
+    font-weight: bold;
+    color: #42af33;
+    text-shadow: 0 1px white;
+}
+.list-movie-item{
+    width: 100%;
+    margin-bottom: 40px;
+    position: relative;
+    /* transition: all ease-in-out 0.5s; */
+}
+.list-movie-item:hover{
+    
+}
+.movie-poster{
+    width: 100%;
+    height:427px;
+    border-radius: 5px;
+    transition: all ease 0.3s;
+}
+.movie-poster:hover{
+    transform: scale(1.05);
+    border: 2px solid #42af33;
+}
+.movie-name{
+    /* color: rgb(192, 187, 187); */
+    color: #fff;
+    /* text-align: center; */
+    margin: 10px 0 5px 0;
+}
+.movie-info{
+    font-weight: bold;
+    display: inline;
+    /* color: #fff; */
+    color: rgb(192, 187, 187);
+}
+.movie-info-detail{
+    color: rgb(192, 187, 187);
+}
+.btn-wrap{
+    width: 100%;
+    height: 40px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: 500;
+    margin-top: 10px;
+    background-color: #000;
+    border-radius: 5px;
+    background-color: #157347;
+    cursor: pointer;
+    transition: all ease 0.3s;
+    position: absolute;
+    bottom: 0;
+}
+.btn-wrap:hover{
+    background-color: #105837;
+    color: #fff;
+    border-radius: 5px;
+}
+.btn-buy-ticket{
+    background-color: transparent;
+    border: none;
+    color: #fff;
+}
+.fa-solid{
+    font-size: 14px;
+    transform: rotate(135deg);
+}
+@media (min-width: 1280px) {
+    .container-movie{
+        margin: 50px 220px 0 220px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-column-gap: 30px;
+    }
+    .link-container{
+    margin: 20px 220px;
+    }
+}
+@media (max-width:1130px) {
+    .container-movie{
+        margin: 50px 100px 0 100px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-column-gap: 30px;
+    }
+    .link-container{
+        margin: 20px 100px;
+        }
+}
+@media (max-width:850px) {
+    .container-movie{
+        margin: 50px 80px 0 80px;
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+    }
+    .link-container{
+        margin: 20px 80px;
+        }
+}

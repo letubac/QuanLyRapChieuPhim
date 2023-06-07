@@ -1,0 +1,167 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: #000; 
+}
+body > div {
+  margin: 5% auto 0;
+}
+.name-head{
+  color: #fff;
+}
+.chon-ghe .name-head{
+  text-align: center;
+  background-color: #333;
+  height: 40px;
+  margin-bottom: 0;
+}
+.movie-name{
+  font-size: 20px;
+  color: #6ac441;
+}
+
+@import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
+
+@import url("https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css");
+
+.container1 {
+  perspective: 1000px;
+  margin: 40px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.seat {
+  background-color: #444451;
+  height: 20px;
+  width: 20px;
+  margin: 3px;
+  /* border-top-left-radius: 10px;
+  border-top-right-radius: 10px; */
+}
+
+.seat .selected {
+  background-color: #0081cb;
+}
+
+.occupied {
+  background-color: rgb(255, 0, 0);
+}
+
+.seat:nth-of-type(2) {
+  margin-right: 18px;
+}
+
+.seat:nth-last-of-type(2) {
+  margin-left: 18px;
+}
+
+.seat:not(.occupied):hover {
+  cursor: pointer;
+  transform: scale(1.2);
+}
+
+.showcase .seat:not(.occupied):hover {
+  cursor: default;
+  transform: scale(1);
+}
+
+.showcase {
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+  background: rgba(0,0,0,0.1);
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: #777;
+}
+
+.showcase li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 10px;
+}
+
+.showcase li small {
+  margin-left: 2px;
+}
+
+.row .tm-edit-product-row{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.screen {
+  background: #fff;
+  height: 70px;
+  width: 70%;
+  margin: 15px 0;
+  transform: rotateX(-45deg);
+  box-shadow: 0 3px 10px rgba(255,255,255,0.7);
+}
+
+p.text {
+  margin: 40px 0;
+}
+
+p.text span {
+  color: #0081cb;
+  font-weight: 600;
+  box-sizing: content-box;
+}
+
+.credits a {
+  color: #fff;
+}
+.seat{
+  margin-right: 10px;
+  padding-right: 26px;
+}
+.name-seat{
+  color: #fff;
+}
+.info-film-right{
+
+  display: flex;
+}
+.detail-movie-poster{
+  /* margin-left: 100px; */
+  padding-left: 30px
+}
+
+.vsc-initialized{
+  background-color: #000;
+}
+
+.mb-3{
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-top: 20px;
+}
+.row .tm-edit-product-row{
+  background-color: #14252d;
+}
+
+.selected-ticket{
+  text-align: center;
+    padding: 10px;
+    background-image: url(https://booking.bhdstar.vn/Ticketing/images/bhd_img/selected_f.png) !important;
+    background-repeat: no-repeat;
+    width: 100%;
+    background-size: 100% 100%;
+    line-height: inherit;
+    float: left;
+}
