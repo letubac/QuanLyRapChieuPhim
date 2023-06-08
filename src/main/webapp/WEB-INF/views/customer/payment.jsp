@@ -31,6 +31,17 @@
 			display: block;
 			margin-top: 0;
 		}
+		
+		.selected-seat {
+		    background-color: blue; /* Màu xanh mong muốn */
+		    color: white; /* Màu chữ trên nền xanh */
+		}
+		
+		/* Định nghĩa lớp CSS cho nút button */
+		.red-button {
+		  background-color: red;
+		  color: white;
+		}
   	</style>
 </head>
 
@@ -117,23 +128,21 @@
 				<c:forEach var="s" items="${sl}">
 					
 						<c:choose>
-							<c:when test="${s.stt == 'Trong' }">
-								<a href="/QuanLyRapChieuPhim/customer/payment_1/${lc.maSC}/${s.num}.htm">
-								<div class="seat">
-                					<span class="name-seat">${s.num }</span>
-              					</div>
-              					</a>	
-							</c:when>
-							<c:when test="${s.stt == 'Da dat' }">
-								<div class="seat occupied">
-                					<span class="name-seat">${s.num }</span>
-              					</div>	
-							</c:when>
-							<c:when test="${s.stt == 'Cua ban' }">
-								<div class="seat selected">
-                					<span class="name-seat">${s.num }</span>
-              					</div>	
-							</c:when>
+						    <c:when test="${s.stt == 'Trong' }">
+						        <div class="seat" onclick="selectSeat(${s.num})">
+						            <span class="name-seat">${s.num }</span>
+						        </div>
+						    </c:when>
+						    <c:when test="${s.stt == 'Da dat' }">
+						        <div class="seat occupied">
+						            <span class="name-seat">${s.num }</span>
+						        </div>
+						    </c:when>
+						    <c:when test="${s.stt == 'Cua ban' }">
+						        <div class="seat selected">
+						            <span class="name-seat">${s.num }</span>
+						        </div>
+						    </c:when>
 						</c:choose>
 					
 				</c:forEach>
@@ -142,6 +151,8 @@
             <p class="text" style="color: #fff;">
               Tổng ghế chọn <span id="count">0</span> - Tổng tiền <span id="total">0</span>
             </p>
+            <button onclick="confirmBooking(selectedSeats, '${lc.maSC}')">Xác nhận đặt vé</button>
+
           </div>
         </div>
       
@@ -334,8 +345,79 @@
       </div>-->
     </div>
 </div>
+<script>
+    var selectedSeats = [];
+</script>
+<script>
+    function selectSeat(seatNum) {
+        var index = selectedSeats.indexOf(seatNum);
+        if (index === -1) {
+            // Chưa chọn ghế này, thêm vào danh sách chọn
+            selectedSeats.push(seatNum);
+        } else {
+            // Đã chọn ghế này, loại bỏ khỏi danh sách chọn
+            selectedSeats.splice(index, 1);
+        }
+        
+        // Thực hiện các thay đổi trên giao diện người dùng
+        updateUI();
+    }
 
+    function updateUI() {
+        // Lấy tất cả các phần tử ghế trong giao diện
+        var seats = document.getElementsByClassName('seat');
 
+        // Duyệt qua tất cả các phần tử ghế
+         var selectedSeatCount = selectedSeats.length; // Số ghế được chọn
+
+      	 // Lấy giá vé từ phần tử <select> với id "movie"
+         var ticketPriceElement = document.getElementById('movie');
+         var ticketPrice = parseInt(ticketPriceElement.value);
+         
+         var totalPrice = selectedSeatCount * ticketPrice; // Tính tổng tiền
+	    
+	    // Hiển thị số ghế được chọn và tổng tiền trong phần tử <span> tương ứng
+	    document.getElementById('count').textContent = selectedSeatCount;
+	    document.getElementById('total').textContent = totalPrice;
+	    
+        for (var i = 0; i < seats.length; i++) {
+            var seat = seats[i];
+            var seatNumElement = seat.querySelector('.name-seat');
+            
+            // Kiểm tra xem phần tử .name-seat có tồn tại hay không
+            if (seatNumElement) {
+                var seatNum = parseInt(seatNumElement.textContent);
+                
+                // Kiểm tra xem ghế có nằm trong danh sách chọn hay không
+                var isSelected = selectedSeats.includes(seatNum);
+                
+                // Thực hiện các thay đổi trên giao diện người dùng dựa trên trạng thái chọn
+                if (isSelected) {
+                seat.style.backgroundColor = 'blue'; // Đặt màu nền cho ghế đã chọn thành màu xanh
+	            } else {
+	                seat.style.backgroundColor = ''; // Xóa màu nền của ghế không được chọn
+	            }
+            }
+        }
+    }
+
+    function confirmBooking(selectedSeats, maSC) {
+        // Kiểm tra xem đã chọn ghế hay chưa
+        if (selectedSeats.length > 0) {
+            // Chuyển đổi danh sách ghế đã chọn thành chuỗi
+            var selectedSeatNumbers = selectedSeats.join(',');
+            
+            // Tạo href với mã SC và danh sách ghế đã chọn
+            var href = '/QuanLyRapChieuPhim/customer/payment_1/' + maSC + '/' + selectedSeatNumbers + '.htm';
+            
+            // Chuyển hướng đến trang thanh toán
+            window.location.href = href;
+        } else {
+            alert('Vui lòng chọn ghế trước khi xác nhận đặt vé.');
+        }
+    }
+
+</script>
 
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

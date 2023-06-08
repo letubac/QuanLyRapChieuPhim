@@ -97,9 +97,9 @@
 
               </li>
               <li class="list-group-item d-flex justify-content-between">
-                <span>Giá</span>
-                <strong>${lv.gia }</strong>
-              </li>
+				    <span>Giá</span>
+				    <strong>${soGhe.size() * lv.gia}</strong>
+				</li>
             </ul>
 
 
@@ -180,11 +180,11 @@
                   style="background:#e01027 ; color: #fff; border: none; cursor: pointer">Hủy Đặt Vé</button>
               </form>
                 
-               <form action="/QuanLyRapChieuPhim/customer/payment_2/${lc.maSC}/${soGhe}.htm">
-               		<button type="submit" class="btn btn-primary btn-lg btn-block" id="btn-continue1"
-                  style="background:#5eb742 ;  color: #fff; border: none; margin-left: 5px; cursor: pointer">Thanh
-                  Toán</button>
-               </form>
+              <form id="paymentForm">
+				  <button type="button" class="btn btn-primary btn-lg btn-block" id="btn-continue1"
+				    style="background:#5eb742 ;  color: #fff; border: none; margin-left: 5px; cursor: pointer"
+				    onclick="encodeAndSubmit()">Thanh Toán</button>
+				</form>
                 
               </div>
             <!-- <button class="btn-continue" id="btn-continue1">Tiep tuc</button> -->
@@ -195,8 +195,14 @@
 
     </div>
 </div>
-
-
+<script>
+  function encodeAndSubmit() {
+    var encodedSoGhe = encodeURIComponent("${soGhe}");
+    var url = "/QuanLyRapChieuPhim/customer/payment_2/${lc.maSC}/" + encodedSoGhe + ".htm";
+    document.getElementById("paymentForm").action = url;
+    document.getElementById("paymentForm").submit();
+  }
+</script>
 
 
   <!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

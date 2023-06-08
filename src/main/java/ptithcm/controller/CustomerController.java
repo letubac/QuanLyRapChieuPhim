@@ -5,6 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -31,7 +32,6 @@ import admin.controller.Message;
 import ptithcm.bean.Seat;
 import ptithcm.entity.LichChieu;
 import ptithcm.entity.LoaiVe;
-import ptithcm.entity.NhanVien;
 import ptithcm.entity.Phim;
 import ptithcm.entity.TaiKhoan;
 import ptithcm.entity.Ve;
@@ -326,8 +326,8 @@ public class CustomerController {
 	}
 	
 	@SuppressWarnings("deprecation")
-	@RequestMapping("/payment_1/{maSC}/{soGhe}.htm")
-	public String payment1(ModelMap model,@PathVariable("maSC") Integer maSC, @PathVariable("soGhe") Integer soGhe) {
+	@RequestMapping("/payment_1/{maSC}/{selectedSeats}.htm")
+	public String payment1(ModelMap model,@PathVariable("maSC") Integer maSC, @PathVariable("selectedSeats") List<Integer> selectedSeats) {
 		LoaiVe lv;
 		LichChieu lc = layLC(maSC);
 		if(lc.getNgayChieu().getDay() > 0 && lc.getNgayChieu().getDay() < 5) {
@@ -338,7 +338,7 @@ public class CustomerController {
 		}
 		model.addAttribute("user", LoginController.kh);
 		model.addAttribute("lc", lc);
-		model.addAttribute("soGhe", soGhe);
+		model.addAttribute("soGhe", selectedSeats);
 		model.addAttribute("lv", lv);
 		model.addAttribute("login", true);
 		return "customer/payment_1";
@@ -346,47 +346,59 @@ public class CustomerController {
 	
 	@SuppressWarnings("deprecation")
 	@RequestMapping("/payment_2/{maSC}/{soGhe}.htm")
-	public String payment2(ModelMap model,@PathVariable("maSC") Integer maSC, @PathVariable("soGhe") Integer soGhe) {
+	public String payment2(ModelMap model,@PathVariable("maSC") Integer maSC, @PathVariable("soGhe") String[] soGhe) {
 		Ve v = new Ve();
 		LichChieu lc = layLC(maSC);
 		LoaiVe lv;
+
+		if (lc.getNgayChieu().getDay() > 0 && lc.getNgayChieu().getDay() < 5) {
+		    lv = layLV("LV01");
+		} else {
+		    lv = layLV("LV02");
+		}
 		
-		if(lc.getNgayChieu().getDay() > 0 && lc.getNgayChieu().getDay() < 5) {
-			lv = layLV("LV01");
-		}
-		else {
-			lv = layLV("LV02");
+		List<Integer> soGheList = new ArrayList<>();
+		for (String ghe : soGhe) {
+		    String gheTrimmed = ghe.trim();
+		    if (gheTrimmed.startsWith("[")) {
+		        gheTrimmed = gheTrimmed.substring(1); // Loại bỏ ký tự "[" đầu chuỗi
+		    }
+		    if (gheTrimmed.endsWith("]")) {
+		        gheTrimmed = gheTrimmed.substring(0, gheTrimmed.length() - 1); // Loại bỏ ký tự "]" cuối chuỗi
+		    }
+		    int gheInt = Integer.parseInt(gheTrimmed);
+		    soGheList.add(gheInt);
 		}
 		
-		v.setDsLichChieu(layLC(maSC));
-		v.setKhachHang(LoginController.kh);
-		v.setLoaiVe(lv);
-		v.setNgayBan(new Date());
-		v.setSoGhe(soGhe);
-		
-		Session session = factory.openSession();
-		Transaction t = session.beginTransaction();
-		try
-		{
-			session.save(v);
-			t.commit();
-			model.addAttribute("lc", lc);
-			model.addAttribute("lv",lv);
-			model.addAttribute("v", v);
-			model.addAttribute("login", true);
-			model.addAttribute("user", LoginController.kh);
-			return "customer/payment_2";
+		for (int ghe : soGheList) {
+		    Ve ve = new Ve();
+		    ve.setDsLichChieu(layLC(maSC));
+		    ve.setKhachHang(LoginController.kh);
+		    ve.setLoaiVe(lv);
+		    ve.setNgayBan(new Date());
+		    ve.setSoGhe(ghe);
+
+		    Session session = factory.openSession();
+		    Transaction t = session.beginTransaction();
+		    try {
+		        session.save(ve);
+		        t.commit();
+		    } catch (Exception e) {
+		        t.rollback();
+		        model.addAttribute("user", LoginController.kh);
+		        model.addAttribute("tk", LoginController.taikhoan);
+		        model.addAttribute("message", e.getMessage());
+		        return "redirect: QuanLyRapChieuPhim/customer/payment_1/{maSC}/{soGhe}.htm";
+		    } finally {
+		        session.close();
+		    }
 		}
-		catch(Exception e)
-		{
-			t.rollback();
-			model.addAttribute("user", LoginController.kh);
-			model.addAttribute("tk", LoginController.taikhoan);
-			model.addAttribute("message",e.getMessage());
-			return "redirect: QuanLyRapChieuPhim/customer/payment_1/{maSC}/{soGhe}.htm";
-		}
-		finally {
-			session.close();
-		}
+
+		model.addAttribute("lc", lc);
+		model.addAttribute("lv", lv);
+		model.addAttribute("v", v);
+		model.addAttribute("login", true);
+		model.addAttribute("user", LoginController.kh);
+		return "customer/payment_2";
 	}
 }
