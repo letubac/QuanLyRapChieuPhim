@@ -182,7 +182,7 @@
                                                 </h5>
                                             </div>
                                             <div class="card-body shadow">
-                                                <div class="col-12 bg-white p-10 rounded mb-10 bg-brand text-white">
+                                                <div id="header-row" class="col-12 bg-white p-10 rounded mb-10 bg-brand text-white">
                                                     <div class="row">
                                                         <div class="col-2 text-center">Mã đơn</div>
                                                         <div class="col-3 text-center">Ngày đặt</div>
@@ -192,7 +192,7 @@
                                                         <div class="col-2 text-center">Thao tác</div>
                                                     </div>
                                                 </div>
-                                                <div class="col-12">
+                                                <div id="product-list" class="col-12">
                                                 	<c:forEach var="s" items="${lv}">
                                                     <div
                                                         class="col-12 bg-white p-10 rounded-1 mb-5 product border border-brand">
@@ -231,6 +231,11 @@
                                                     </c:forEach>
                                                 </div>
                                             </div>
+                                            <div id="pagination">
+											    <button class="page-button" data-page="1"></button>
+											    <button class="page-button" data-page="2"></button>
+											    <button class="page-button" data-page="3"></button>
+											</div>
                                         </div>
                                     </div>
 									
@@ -433,8 +438,92 @@
     </div>
     </c:forEach>
     <!--  -->
-    
-    
+    <script>
+    // Kích thước trang (số lượng sản phẩm trên mỗi trang)
+    const pageSize = 12;
+
+    // Tổng số sản phẩm
+    const totalProducts = document.getElementById('product-list').children.length;
+
+    // Số lượng trang
+    const totalPages = Math.ceil(totalProducts / pageSize);
+
+    // Hiển thị danh sách sản phẩm theo trang
+    function showProductsByPage(page) {
+        const productList = document.getElementById('product-list');
+        const products = productList.children;
+
+        // Ẩn tất cả sản phẩm
+        for (let i = 0; i < products.length; i++) {
+            products[i].style.display = 'none';
+        }
+
+        // Hiển thị sản phẩm trong phạm vi trang hiện tại
+        const startIndex = (page - 1) * pageSize;
+        const endIndex = Math.min(startIndex + pageSize, totalProducts);
+        for (let i = startIndex; i < endIndex; i++) {
+            products[i].style.display = 'block';
+        }
+    }
+
+    // Hiển thị trang đầu tiên khi trang web được tải
+    showProductsByPage(1);
+
+    // Tạo các nút phân trang
+    const pagination = document.getElementById('pagination');
+    for (let i = 1; i <= totalPages; i++) {
+        const pageLink = document.createElement('a');
+        pageLink.href = '#';
+        if(i < totalPages){
+        	pageLink.innerText = i + " - ";
+        }else{
+        	pageLink.innerText = i;
+        }
+        
+
+        pageLink.addEventListener('click', function () {
+            showProductsByPage(i);
+        });
+
+        pagination.appendChild(pageLink);
+    }
+</script>
+    <!-- <script>
+    //HÀM SEARCH
+
+ 	// Lắng nghe sự kiện khi người dùng nhấn Enter hoặc nút tìm kiếm được nhấn
+    document.getElementById('order-search').addEventListener('keypress', function (event) {
+        if (event.key === 'Enter') {
+            performSearch();
+        }
+    });
+
+    document.getElementById('search-button').addEventListener('click', function () {
+        performSearch();
+    });
+
+    function performSearch() {
+        debugger;
+        var searchInput = document.getElementById('order-search').value.trim();
+        var orders = document.querySelectorAll('.product'); // Lấy danh sách các phần tử sản phẩm
+
+        // Lặp qua danh sách sản phẩm và ẩn hiện phần tử tùy thuộc vào kết quả tìm kiếm
+        for (var i = 0; i < orders.length; i++) {
+            var order = orders[i];
+            var orderId = order.querySelector('.order-id').textContent.trim();
+            var orderDate = order.querySelector('.order-date').textContent.trim();
+            var orderState = order.querySelector('.product-state').textContent.trim();
+
+            // Kiểm tra điều kiện tìm kiếm (ví dụ: tìm kiếm theo mã đơn)
+            if (orderId.includes(searchInput)) {
+                order.style.display = 'block'; // Hiển thị phần tử nếu kết quả tìm kiếm thành công
+            } else {
+                order.style.display = 'none'; // Ẩn phần tử nếu không tìm thấy kết quả tìm kiếm
+            }
+        }
+    }
+        
+</script> -->  
     <script src=""></script>
     <script src="http://localhost:8080/QuanLyRapChieuPhim/resources/js/vendor/modernizr-3.6.0.min.js"></script>
     <script src="http://localhost:8080/QuanLyRapChieuPhim/resources/js/vendor/jquery-3.6.0.min.js"></script>

@@ -131,6 +131,14 @@
                             <div>
                                 <h3 class="box-title">Danh Sách Vé Bán Ra</h3>
                             </div>
+                            <!-- <div class="btn-add-e">
+									<button class="button-header1-e" data-bs-toggle="modal"
+										data-bs-target="#export-excel">
+										<i class="fa-solid fa-circle-exclamation"
+											data-bs-toggle="modal" data-bs-target="#export-excel"></i>
+										Xuất Excel
+									</button>
+								</div> -->
                         </div>
 
 								<div class="table-responsive">

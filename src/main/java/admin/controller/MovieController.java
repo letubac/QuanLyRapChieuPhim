@@ -114,10 +114,14 @@ public class MovieController {
 	
 	@RequestMapping(value = "movie/add.htm", method = RequestMethod.POST)
 	public String insert(ModelMap model, @ModelAttribute("movie") Phim movie, BindingResult result, BindingResult errors,
-			@RequestParam("thoiLuong") String thoiLuongString,@RequestParam("ngayKC") String ngayKC,HttpServletRequest request, RedirectAttributes redirectAttributes) {
+			@RequestParam("thoiLuong") String thoiLuongString,@RequestParam("ngayKC") String ngayKC,@RequestParam("giaVe") String giaVe,HttpServletRequest request, RedirectAttributes redirectAttributes) {
 
 			
 		String[] TL = request.getParameterValues("TL");
+		
+		if (giaVe.startsWith(",")) {
+			giaVe = giaVe.substring(1); // Loại bỏ ký tự "," đầu chuỗi
+	    }
 
 		if(Objects.isNull(TL)) {
 			redirectAttributes.addFlashAttribute("message",
@@ -156,6 +160,7 @@ public class MovieController {
 					
 					movie.setThoiLuong(thoiLuongI);
 					movie.setNgayKC(ngayKCDate);
+					movie.setGiaVe(Integer.valueOf(giaVe));
 					session.save(movie);
 					
 					
@@ -239,6 +244,7 @@ public class MovieController {
 			@RequestParam("ngayKC") String ngayKC,@RequestParam("maPhimN") Integer maPhimN,@RequestParam("maTT") Integer maTT,
 			@RequestParam("tenPhim") String tenPhim,@RequestParam("moTa") String moTa,
 			@RequestParam("link") String link,
+			@RequestParam("giaVe") String giaVe,
 			@RequestParam("nuocSX") String nuocSX,@RequestParam("namSX") Integer namSX,@RequestParam("daoDien") String daoDien,HttpServletRequest request,RedirectAttributes redirectAttributes ) {
 			
 			String[] TL = request.getParameterValues("TL");
@@ -257,6 +263,10 @@ public class MovieController {
 				TheLoai tl = new TheLoai();
 
 				Transaction t = session.beginTransaction();
+				
+				if (giaVe.startsWith(",")) {
+					giaVe = giaVe.substring(1); // Loại bỏ ký tự "," đầu chuỗi
+			    }
 				
 				Integer temp = getLichChieusByIdPhim(maPhimN);
 				if(temp == 1) {
@@ -285,6 +295,7 @@ public class MovieController {
 					movie.setNuocSX(nuocSX);
 					movie.setDaoDien(daoDien);
 					movie.setLink(link);
+					movie.setGiaVe(Integer.valueOf(giaVe));
 
 					session.merge(movie);
 					redirectAttributes.addFlashAttribute("message",

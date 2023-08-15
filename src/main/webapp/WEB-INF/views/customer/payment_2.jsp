@@ -83,7 +83,7 @@
               <div>Rạp: <span class="panel-info-span">PTITHCM</span></div>
               <div>Phim: <span class="panel-info-span">${lc.dsPhim.tenPhim}</span></div>
               <div>Suất Chiếu: <span class="panel-info-span">${lc.gioChieu}:00(${lc.ngayChieu })</span></div>
-              <div>Giá vé: <span class="panel-info-span">${lv.gia}</span></div>
+              <div>Giá vé: <span class="panel-info-span">${soGhe.size() * lc.dsPhim.giaVe}</span></div>
               <!--<div>Do an va thuc uong: <span class="panel-info-span"></span></div>
               <div>Tong cong: <span class="panel-info-span">45,000 VND</span></div>-->
             </div>

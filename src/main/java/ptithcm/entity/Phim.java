@@ -6,7 +6,6 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,7 +17,13 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
+@Getter
+@Setter
 @Table(name="PHIM")
 public class Phim {
 	@Id
@@ -58,33 +63,15 @@ public class Phim {
 	@Column(name="MaTT")
 	private Integer maTT;
 	
+	@Column(name="GiaVe")
+	private Integer giaVe; // Giá vé - money
+	
 	@OneToMany(mappedBy="dsPhim")
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private Collection<LichChieu> lichChieuList;
-	
-	public String getLinkTrailer() {
-		return linkTrailer;
-	}
 
-	public void setLinkTrailer(String linkTrailer) {
-		this.linkTrailer = linkTrailer;
-	}
-
-	public Collection<LichChieu> getLichChieuList() {
-		return lichChieuList;
-	}
-
-	public void setLichChieuList(Collection<LichChieu> lichChieuList) {
-		this.lichChieuList = lichChieuList;
-	}
-
-	public String getLink() {
-		return link;
-	}
-
-	public void setLink(String link) {
-		this.link = link;
-	}
+	@Column(name="MaKM")
+	private String maKM;
 
 	@OneToMany(mappedBy="phim")
 	@LazyCollection(LazyCollectionOption.FALSE)
@@ -92,14 +79,6 @@ public class Phim {
 	
 	public Phim() {
 		// TODO Auto-generated constructor stub
-	}
-	
-	public Collection<TheLoai> getTheLoaiS() {
-		return theLoaiS;
-	}
-
-	public void setTheLoaiS(Collection<TheLoai> theLoaiS) {
-		theLoaiS = theLoaiS;
 	}
 
 	public Phim(Integer maPhim, String tenPhim, String moTa, String nuocSX, Date ngayKC, Integer namSX, String daoDien,
@@ -114,77 +93,5 @@ public class Phim {
 		this.daoDien = daoDien;
 		this.thoiLuong = thoiLuong;
 		this.theLoaiS = theLoaiS;
-	}
-
-	public Integer getMaPhim() {
-		return maPhim;
-	}
-
-	public void setMaPhim(Integer maPhim) {
-		this.maPhim = maPhim;
-	}
-
-	public String getTenPhim() {
-		return tenPhim;
-	}
-
-	public void setTenPhim(String tenPhim) {
-		this.tenPhim = tenPhim;
-	}
-
-	public String getMoTa() {
-		return moTa;
-	}
-
-	public void setMoTa(String moTa) {
-		this.moTa = moTa;
-	}
-
-	public String getNuocSX() {
-		return nuocSX;
-	}
-
-	public void setNuocSX(String nuocSX) {
-		this.nuocSX = nuocSX;
-	}
-
-	public Date getNgayKC() {
-		return ngayKC;
-	}
-
-	public void setNgayKC(Date ngayKC) {
-		this.ngayKC = ngayKC;
-	}
-
-	public Integer getNamSX() {
-		return namSX;
-	}
-
-	public void setNamSX(Integer namSX) {
-		this.namSX = namSX;
-	}
-
-	public String getDaoDien() {
-		return daoDien;
-	}
-
-	public void setDaoDien(String daoDien) {
-		this.daoDien = daoDien;
-	}
-
-	public Integer getThoiLuong() {
-		return thoiLuong;
-	}
-
-	public void setThoiLuong(Integer thoiLuong) {
-		this.thoiLuong = thoiLuong;
-	}
-
-	public Integer getMaTT() {
-		return maTT;
-	}
-
-	public void setMaTT(Integer maTT) {
-		this.maTT = maTT;
 	}
 }

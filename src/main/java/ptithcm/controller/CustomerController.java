@@ -46,7 +46,7 @@ public class CustomerController {
 	public List<Ve> layLVKH(Integer maKH)
 	{
 		Session session = factory.getCurrentSession();
-		String hql = "FROM Ve where maKH = :maKH";
+		String hql = "FROM Ve where maKH = :maKH order by maVe desc ";
 		Query query = session.createQuery(hql);
 		query.setParameter("maKH", maKH);
 		List<Ve> list = query.list();
@@ -289,6 +289,16 @@ public class CustomerController {
 		return list;
 	}
 	
+	public Phim listPhim(int maPhim)
+	{
+		Session session = factory.getCurrentSession();
+		String hql = "FROM Phim where maPhim = :maPhim";
+		Query query = session.createQuery(hql);
+		query.setParameter("maPhim", maPhim);
+		Phim phim = (Phim)query.list().get(0);
+		return phim;
+	}
+	
 	@SuppressWarnings("deprecation")
 	@RequestMapping("/payment/{maPhim}/{maSC}.htm")
 	public String payment(ModelMap model,@PathVariable("maPhim") Integer maPhim,
@@ -298,6 +308,7 @@ public class CustomerController {
 		LichChieu lc = layLC(maSC);
 		LoaiVe lv;
 		List<Seat> sl= listSeat(maSC,LoginController.kh.getMaKH());
+		Phim phim = listPhim(maPhim);
 		if(LoginController.taikhoan.getEmail() == null) {
 			model.addAttribute("login", false);
 			return "login";
@@ -396,6 +407,7 @@ public class CustomerController {
 
 		model.addAttribute("lc", lc);
 		model.addAttribute("lv", lv);
+		model.addAttribute("soGhe", soGheList);
 		model.addAttribute("v", v);
 		model.addAttribute("login", true);
 		model.addAttribute("user", LoginController.kh);

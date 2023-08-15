@@ -26,6 +26,11 @@
 			</a></li>
 			<li class="sidebar-item"><a
 				class="sidebar-link waves-effect waves-dark sidebar-link"
+				href="http://localhost:8080/QuanLyRapChieuPhim/admin/config.htm" aria-expanded="false"> <i
+					class="fa-solid fa-exclamation-circle"></i> <span class="hide-menu">Cấu hình giá vé</span>
+			</a></li>
+			<li class="sidebar-item"><a
+				class="sidebar-link waves-effect waves-dark sidebar-link"
 				href="http://localhost:8080/QuanLyRapChieuPhim/admin/employee.htm"" aria-expanded="false"> <i
 					class="fa-solid fa-user-group"></i> <span class="hide-menu">Nhân Viên</span>
 			</a></li>
@@ -33,6 +38,12 @@
 				class="sidebar-link waves-effect waves-dark sidebar-link"
 				href="http://localhost:8080/QuanLyRapChieuPhim/admin/customer.htm"" aria-expanded="false"> <i
 					class="fa-solid fa-users"></i> <span class="hide-menu">Khách Hàng</span>
+			</a></li>
+			<li class="sidebar-item"><a
+				class="sidebar-link waves-effect waves-dark sidebar-link"
+				href="http://localhost:8080/QuanLyRapChieuPhim/admin/promotion.htm"
+				aria-expanded="false"> <i class="fa-solid fa-gift"></i> <span
+					class="hide-menu">Khuyến Mãi</span>
 			</a></li>
 			<li class="sidebar-item"><a
 				class="sidebar-link waves-effect waves-dark sidebar-link"

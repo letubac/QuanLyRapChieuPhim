@@ -288,6 +288,16 @@
 																			<p class="detail-info-top-add">Thời lượng</p>
 																			<input class="detail-info-buton-add" name="thoiLuong"  maxLength="10"/>
 																		</div>
+																		<div class="detail-info-fix">
+																			<p class="detail-info-top-fix">Giá Vé</p>
+		
+																			<select class="detail-info-buton-fix" name="giaVe">
+																				<c:forEach var="lv" items="${lv}">
+																					<option value=${lv.gia }>${lv.gia }</option>
+		
+																				</c:forEach>
+																			</select>
+																		</div>
 																		<div class="same-add">
 																			<div class="detail-info-left">
 																				<p class="detail-info-top-add">Ngày Chiếu</p>
@@ -544,6 +554,14 @@
 														<p class="detail-info-top-add">Thời lượng</p>
 														<input class="detail-info-buton-add" name="thoiLuong"  maxLength="30"
 															value="${p.thoiLuong }" required/>
+													</div>
+													<div class="detail-info-fix">
+														<p class="detail-info-top-fix">Giá vé</p>
+														<select class="detail-info-buton-fix" name="giaVe">
+															<c:forEach var="lv" items="${lv}">
+																<option value=${lv.gia }>${lv.gia }</option>
+															</c:forEach>
+														</select>
 													</div>
 													<div class="same-add">
 														<div class="detail-info-left">

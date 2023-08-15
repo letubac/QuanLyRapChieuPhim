@@ -115,7 +115,7 @@
             </li>
           </ul>
           <select id="movie">
-            <option value="${lv.gia }">Giá Vé (Rs. ${lv.gia } VND)</option>
+            <option value="${phim.giaVe }">Giá Vé (Rs. ${phim.giaVe } VND)</option>
             <!-- <option value="200">Kabir Singh (Rs. 200)</option>
             <option value="150">Duniyadari (Rs. 150)</option>
             <option value="100">Natsamrat (Rs. 100)</option> -->
