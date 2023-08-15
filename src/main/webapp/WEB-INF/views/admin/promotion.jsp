@@ -485,7 +485,13 @@
 										</div>
 										<div class="detail-info-fix">
 											<p class="detail-info-top-fix">Mã Trạng Thái</p>
-											<p name="maTT" class="detail-info-buton-fix"
+											<input type="input-name-add-e" name="maTT"
+												class="detail-info-buton-fix" 
+												style="background-color: lightgray;" readOnly value="${l.maTT }">
+										</div>
+										<div class="detail-info-fix">
+											<p class="detail-info-top-fix">Tên Trạng Thái</p>
+											<p class="detail-info-buton-fix"
 												style="background-color: lightgray;" readOnly>
 												${l.maTT==0?"Có hiệu lực":"Hết hiệu lực" }</p>
 										</div>

@@ -25,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ptithcm.entity.ChiTietTheLoai;
 import ptithcm.entity.KhuyenMai;
+import ptithcm.entity.LichChieu;
 import ptithcm.entity.Phim;
 import ptithcm.entity.TheLoai;
 
@@ -87,6 +88,16 @@ public class KhuyenMaiController {
 			session.close();
 		}
 
+	}
+	
+	public KhuyenMai getSingleKhuyenMai(String maKM) {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM KhuyenMai where maKM=:maKM";
+		Query query = session.createQuery(hql);
+		query.setParameter("maKM", maKM);
+		KhuyenMai n = (KhuyenMai) query.list().get(0);
+
+		return n;
 	}
 	
 	@RequestMapping(value = "promotion/add.htm", method = RequestMethod.POST)
@@ -179,8 +190,9 @@ public class KhuyenMaiController {
 	
 	@RequestMapping(value = "promotion/update/{maKM}.htm",  method=RequestMethod.POST)
 	public String updatePromotion(ModelMap model, @ModelAttribute("promotion") KhuyenMai promotion, BindingResult result, BindingResult errors,
+			@RequestParam("maKM") String maKM,
 			@RequestParam("tenKM") String tenKM,@RequestParam("ngayBatDau") String ngayBatDau, @RequestParam("ngayKetThuc") String ngayKetThuc,
-			 @RequestParam("maTT") Integer maTT, @RequestParam("mucGiamGia") Integer mucGiamGia, 
+			 @RequestParam("maTT") Integer maTT, @RequestParam("mucGiamGia") String mucGiamGia, 
 			 @RequestParam("moTa") String moTa, RedirectAttributes redirectAttributes) throws ParseException {
 
 		//		System.out.print(ticket.getMaLV());
@@ -191,6 +203,11 @@ public class KhuyenMaiController {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 		Date ngayBatDauDate = formatter.parse(ngayBatDau);
 		Date ngayKetThucDate = formatter.parse(ngayKetThuc);
+		
+		if (mucGiamGia.matches(".*[a-zA-Z].*")) {
+		    redirectAttributes.addFlashAttribute("message", new Message("error", "Mức giảm giá không được chứa ký tự!"));
+		    return "redirect:/admin/promotion.htm";
+		}
 		
 		if(ngayBatDauDate.before(new Date())) {
 			redirectAttributes.addFlashAttribute("message", new Message("error", "Ngày bắt đầu khuyến mãi không hợp lệ"));
@@ -213,12 +230,21 @@ public class KhuyenMaiController {
 		}
 		
 		try {
-			promotion.setNgayBatDau(ngayBatDauDate);
-			promotion.setNgayKetThuc(ngayKetThucDate);
-			session.merge(promotion);
-			redirectAttributes.addFlashAttribute("message",
-					new Message("success","sửa thành công"));
-			t.commit();
+			Integer temp = this.deleteNews(maKM);
+			if (temp == 1) {
+				promotion = getSingleKhuyenMai(maKM);
+				promotion.setNgayBatDau(ngayBatDauDate);
+				promotion.setNgayKetThuc(ngayKetThucDate);
+				
+				session.merge(promotion);
+				redirectAttributes.addFlashAttribute("message",
+						new Message("success","sửa thành công"));
+				System.out.println("sửa thành công");
+				t.commit();
+			} else if (temp == 0) {
+				redirectAttributes.addFlashAttribute("message", new Message("error", "Sửa thất bại, Mã khuyến mãi đang được áp dụng cho phim khác!"));
+				System.out.println("Sửa thất bại!");
+			}
 			
 			return "redirect:/admin/promotion.htm";
 		}
