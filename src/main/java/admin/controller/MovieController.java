@@ -114,6 +114,7 @@ public class MovieController {
 	
 	@RequestMapping(value = "movie/add.htm", method = RequestMethod.POST)
 	public String insert(ModelMap model, @ModelAttribute("movie") Phim movie, BindingResult result, BindingResult errors,
+			@RequestParam("maKM") String maKM,
 			@RequestParam("thoiLuong") String thoiLuongString,@RequestParam("ngayKC") String ngayKC,@RequestParam("giaVe") String giaVe,HttpServletRequest request, RedirectAttributes redirectAttributes) {
 
 			
@@ -161,6 +162,7 @@ public class MovieController {
 					movie.setThoiLuong(thoiLuongI);
 					movie.setNgayKC(ngayKCDate);
 					movie.setGiaVe(Integer.valueOf(giaVe));
+					movie.setMaKM(maKM);
 					session.save(movie);
 					
 					
@@ -243,7 +245,7 @@ public class MovieController {
 	public String updateMovie(ModelMap model, @ModelAttribute("movieUpdate") Phim movie, BindingResult result, BindingResult errors,@RequestParam("thoiLuong") String thoiLuongString,
 			@RequestParam("ngayKC") String ngayKC,@RequestParam("maPhimN") Integer maPhimN,@RequestParam("maTT") Integer maTT,
 			@RequestParam("tenPhim") String tenPhim,@RequestParam("moTa") String moTa,
-			@RequestParam("link") String link,
+			@RequestParam("link") String link,@RequestParam("maKM") String maKM,
 			@RequestParam("giaVe") String giaVe,
 			@RequestParam("nuocSX") String nuocSX,@RequestParam("namSX") Integer namSX,@RequestParam("daoDien") String daoDien,HttpServletRequest request,RedirectAttributes redirectAttributes ) {
 			
@@ -296,6 +298,7 @@ public class MovieController {
 					movie.setDaoDien(daoDien);
 					movie.setLink(link);
 					movie.setGiaVe(Integer.valueOf(giaVe));
+					movie.setMaKM(maKM);
 
 					session.merge(movie);
 					redirectAttributes.addFlashAttribute("message",

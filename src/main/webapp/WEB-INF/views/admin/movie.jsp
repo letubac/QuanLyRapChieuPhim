@@ -153,7 +153,8 @@
 								<table class="table table-striped table-hover" id="sortTable">
 									<thead>
 										<tr>
-											<th class="border-top-0">Mã phim</th>
+											<th class="border-top-0">Mã Phim</th>
+											<th class="border-top-0">Mã Khuyến Mãi</th>
 											<th class="border-top-0">Tên Phim</th>
 											<th class="border-top-0">Ngày Chiếu</th>
 											<th class="border-top-0">Thời Lượng</th>
@@ -166,9 +167,10 @@
 										<c:forEach var="p" items="${phim}">
 											<tr>
 												<td>${p.maPhim }</td>
+												<td>${p.maKM }</td>
 												<td>${p.tenPhim }</td>
 												<td>${p.ngayKC }</td>
-												<td>${p.thoiLuong } Phút</td>
+												<td>${p.thoiLuong }Phút</td>
 												<td>${p.daoDien }</td>
 												<td>${p.maTT==1?"Đang chiếu":p.maTT==0?"Sắp chiếu":"Ngừng chiếu" }</td>
 												<td><a href="#">
@@ -177,8 +179,8 @@
 															<i class="fa-solid fa-circle-exclamation"></i>
 														</button>
 												</a> <a href="#">
-														<button class="button" data="${p.maPhim}" data-bs-toggle="modal"
-															data-bs-target="#f-${p.maPhim}">
+														<button class="button" data="${p.maPhim}"
+															data-bs-toggle="modal" data-bs-target="#f-${p.maPhim}">
 															<i class="fa-solid fa-pen-to-square"></i>
 														</button>
 												</a> <a href="#">
@@ -241,60 +243,74 @@
 
 																		<div class="detail-info-add">
 																			<p class="detail-info-top-add">Tên Phim</p>
-																			<input class="detail-info-buton-add" name="tenPhim"  maxLength="99"
-																				required />
+																			<input class="detail-info-buton-add" name="tenPhim"
+																				maxLength="99" required />
+																		</div>
+																		<div class="detail-info-add">
+																			<p class="detail-info-top-add">Mã Khuyến Mãi</p>
+																			<select class="detail-info-buton-fix" name="maPhim">
+																				<option value=''>---No---</option>
+																				<c:forEach var="km" items="${km}">
+																					<option value=${km.maKM }>${km.maKM }</option>
+
+																				</c:forEach>
+																			</select>
 																		</div>
 																		<div class="detail-info-add">
 																			<p class="detail-info-top-add">Mô Tả</p>
-																			<input class="detail-info-buton-add" name="moTa"  maxLength="999"/>
+																			<input class="detail-info-buton-add" name="moTa"
+																				maxLength="999" />
 																		</div>
 																		<div class="detail-info-add">
-																			<p class="detail-info-top-add">Mã Thể Loại: </p>
-																			<div style="display: grid;grid-template-columns: 1fr 1fr;">
+																			<p class="detail-info-top-add">Mã Thể Loại:</p>
+																			<div
+																				style="display: grid; grid-template-columns: 1fr 1fr;">
 																				<c:forEach var="t" items="${dsCTTL}">
-																			<div>
-																				<input type="checkbox" name="TL" id="${t.maTL}"
-																						value="${t.maTL}">
-																					<label for="${t.maTL}">${t.tenTL}</label>
-																			</div>
-																				
-																			</c:forEach>
+																					<div>
+																						<input type="checkbox" name="TL" id="${t.maTL}"
+																							value="${t.maTL}"> <label for="${t.maTL}">${t.tenTL}</label>
+																					</div>
+
+																				</c:forEach>
 																			</div>
 																		</div>
 																		<div class="detail-info-add">
 																			<p class="detail-info-top-add">Nước Sản Xuất</p>
-																			<input class="detail-info-buton-add" name="nuocSX"  maxLength="49"/>
+																			<input class="detail-info-buton-add" name="nuocSX"
+																				maxLength="49" />
 																		</div>
 																		<div class="detail-info-add">
 																			<p class="detail-info-top-add">Năm Sản Xuất</p>
-																			<input class="detail-info-buton-add" name="namSX"  maxLength="4"
-																				required />
+																			<input class="detail-info-buton-add" name="namSX"
+																				maxLength="4" required />
 																		</div>
 																		<div class="detail-info-add">
 																			<p class="detail-info-top-add">Link ảnh</p>
-																			<input class="detail-info-buton-add" name="link"  maxLength="500"
-																				required />
+																			<input class="detail-info-buton-add" name="link"
+																				maxLength="500" required />
 																		</div>
 																		<div class="detail-info-add">
 																			<p class="detail-info-top-add">Link Trailer</p>
-																			<input class="detail-info-buton-add" name="linkTrailer"  maxLength="500"
-																				required />
+																			<input class="detail-info-buton-add"
+																				name="linkTrailer" maxLength="500" required />
 																		</div>
 																		<div class="detail-info-add">
 																			<p class="detail-info-top-add">Đạo diễn</p>
-																			<input class="detail-info-buton-add" name="daoDien"  maxLength="30"/>
+																			<input class="detail-info-buton-add" name="daoDien"
+																				maxLength="30" />
 																		</div>
 																		<div class="detail-info-add">
 																			<p class="detail-info-top-add">Thời lượng</p>
-																			<input class="detail-info-buton-add" name="thoiLuong"  maxLength="10"/>
+																			<input class="detail-info-buton-add" name="thoiLuong"
+																				maxLength="10" />
 																		</div>
 																		<div class="detail-info-fix">
 																			<p class="detail-info-top-fix">Giá Vé</p>
-		
+
 																			<select class="detail-info-buton-fix" name="giaVe">
 																				<c:forEach var="lv" items="${lv}">
 																					<option value=${lv.gia }>${lv.gia }</option>
-		
+
 																				</c:forEach>
 																			</select>
 																		</div>
@@ -369,7 +385,11 @@
 															<h6 class="detail-info-buton">${p.tenPhim }</h6>
 														</div>
 														<div class="detail-info">
-															<p class="detail-info-top" >Thể Loại</p>
+															<p class="detail-info-top">Mã Khuyến Mãi</p>
+															<h6 class="detail-info-buton">${p.maKM }</h6>
+														</div>
+														<div class="detail-info">
+															<p class="detail-info-top">Thể Loại</p>
 															<h6 class="detail-info-buton">
 																<c:forEach var="ptl" items="${p.theLoaiS }">
 																	<span>${ptl.chiTietTL.tenTL },</span>
@@ -495,65 +515,78 @@
 														<p class="detail-info-top-add">Tên Phim</p>
 														<input class="detail-info-buton-add" name="tenPhim"
 															value="${p.tenPhim }" required /> <input type="hidden"
-															value="${p.maPhim }" name="maPhimN"  maxLength="50"/>
+															value="${p.maPhim }" name="maPhimN" maxLength="50" />
+													</div>
+
+													<div class="detail-info-add">
+														<p class="detail-info-top-add">Mã Khuyến Mãi</p>
+														<select class="detail-info-buton-fix" name="maKM">
+															<option value=''>---No---</option>
+															<c:forEach var="km" items="${km}">
+																<option value=${km.maKM }>${km.maKM }</option>
+
+															</c:forEach>
+														</select>
 													</div>
 													<div class="detail-info-add">
 														<p class="detail-info-top-add">Mô Tả</p>
-														<input class="detail-info-buton-add" name="moTa"  maxLength="999"
-															value="${p.moTa }" required/>
+														<input class="detail-info-buton-add" name="moTa"
+															maxLength="999" value="${p.moTa }" required />
 													</div>
 													<div class="detail-info-add">
 														<p class="detail-info-top-add">Mã Thể Loại</p>
-														
-														 <c:forEach var="tl"  items="${p.theLoaiS}">
-															<input type="hidden" class="tlc-${p.maPhim}" value="${tl.chiTietTL.maTL}">
-														</c:forEach> 
+
+														<c:forEach var="tl" items="${p.theLoaiS}">
+															<input type="hidden" class="tlc-${p.maPhim}"
+																value="${tl.chiTietTL.maTL}">
+														</c:forEach>
 														<%-- <c:forEach var="t" items="${dsCTTL}">
 														
 															<input type="checkbox" name="TL" class="${p.maPhim}" id="tlm-${p.maPhim}-${t.maTL}"
 																value="${t.maTL}">
 															<label for="${t.maTL}">${t.tenTL}</label>
 														</c:forEach> --%>
-														<div style="display: grid;grid-template-columns: 1fr 1fr;">
-																				<c:forEach var="t" items="${dsCTTL}">
-																			<div>
-																				<input type="checkbox" name="TL"  class="${p.maPhim}" id="tlm-${p.maPhim}-${t.maTL}"
-																						value="${t.maTL}">
-																					<label for="${t.maTL}">${t.tenTL}</label>
-																			</div>
-																				
-																			</c:forEach>
-																			</div>
+														<div
+															style="display: grid; grid-template-columns: 1fr 1fr;">
+															<c:forEach var="t" items="${dsCTTL}">
+																<div>
+																	<input type="checkbox" name="TL" class="${p.maPhim}"
+																		id="tlm-${p.maPhim}-${t.maTL}" value="${t.maTL}">
+																	<label for="${t.maTL}">${t.tenTL}</label>
+																</div>
+
+															</c:forEach>
+														</div>
 													</div>
 													<div class="detail-info-add">
 														<p class="detail-info-top-add">Nước Sản Xuất</p>
-														<input class="detail-info-buton-add" name="nuocSX"  maxLength="30"	
-															value="${p.nuocSX }" required/>
+														<input class="detail-info-buton-add" name="nuocSX"
+															maxLength="30" value="${p.nuocSX }" required />
 													</div>
 													<div class="detail-info-add">
 														<p class="detail-info-top-add">Năm Sản Xuất</p>
-														<input class="detail-info-buton-add" name="namSX"  maxLength="4"
-															value="${p.namSX }" required />
+														<input class="detail-info-buton-add" name="namSX"
+															maxLength="4" value="${p.namSX }" required />
 													</div>
 													<div class="detail-info-add">
 														<p class="detail-info-top-add">Link Phim</p>
-														<input class="detail-info-buton-add" name="link"  maxLength="1000"
-															value="${p.link }" required />
+														<input class="detail-info-buton-add" name="link"
+															maxLength="1000" value="${p.link }" required />
 													</div>
 													<div class="detail-info-add">
 														<p class="detail-info-top-add">Link Trailer</p>
-														<input class="detail-info-buton-add" name="linkTrailer"  maxLength="1000"
-															value="${p.linkTrailer }" required />
+														<input class="detail-info-buton-add" name="linkTrailer"
+															maxLength="1000" value="${p.linkTrailer }" required />
 													</div>
 													<div class="detail-info-add">
 														<p class="detail-info-top-add">Đạo diễn</p>
-														<input class="detail-info-buton-add" name="daoDien"  maxLength="49"
-															value="${p.daoDien }" required />
+														<input class="detail-info-buton-add" name="daoDien"
+															maxLength="49" value="${p.daoDien }" required />
 													</div>
 													<div class="detail-info-add">
 														<p class="detail-info-top-add">Thời lượng</p>
-														<input class="detail-info-buton-add" name="thoiLuong"  maxLength="30"
-															value="${p.thoiLuong }" required/>
+														<input class="detail-info-buton-add" name="thoiLuong"
+															maxLength="30" value="${p.thoiLuong }" required />
 													</div>
 													<div class="detail-info-fix">
 														<p class="detail-info-top-fix">Giá vé</p>
@@ -645,20 +678,19 @@
 			});
 			alertify.set('notifier', 'position', 'top-right');
 		}
-		
+
 		$(".button").click(function() {
 			const maPhim = this.getAttribute("data");
-			
+
 			$(".tlc-" + maPhim).each(function() {
 				$("#tlm-" + maPhim + "-" + this.value).prop("checked", true)
 			})
-			
-			
+
 		})
-		
-		$(".inputTL").each(function(){
+
+		$(".inputTL").each(function() {
 			console.log(this.value)
-		}) 
+		})
 	</script>
 </body>
 </html>

@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import ptithcm.controller.LoginController;
 import ptithcm.entity.ChiTietTheLoai;
+import ptithcm.entity.GiaVeConfig;
 import ptithcm.entity.KhachHang;
 import ptithcm.entity.KhuyenMai;
 import ptithcm.entity.LichChieu;
@@ -230,7 +231,7 @@ public class ShowController {
 	@RequestMapping("movie")
 	public String movie(ModelMap model, HttpServletRequest request, HttpSession ss) {
 		Session session = factory.getCurrentSession();
-		String hql = "FROM Phim";
+		String hql = "FROM Phim order by MaPhim desc";
 		Query query = session.createQuery(hql);
 		List<Phim> list = query.list();
 
@@ -239,7 +240,15 @@ public class ShowController {
 		model.addAttribute("phim", list);
 		model.addAttribute("dsCTTL", getAllCTTL());
 		model.addAttribute("lv", lv);
+		model.addAttribute("km", getAllKM());
 		return "admin/movie";
+	}
+
+	public List<KhuyenMai> getAllKM() {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM KhuyenMai WHERE MaTT = 0";
+		Query query = session.createQuery(hql);
+		return query.list();
 	}
 
 	public List<ChiTietTheLoai> getAllCTTL() {
@@ -396,6 +405,65 @@ public class ShowController {
 		model.addAttribute("maxKMNew", maxKMNew);
 
 		return "admin/promotion";
+	}
+
+	// Kiểm tra phim có đang trong lịch chiếu không
+	public Boolean getDsPhimByLichChieu(Phim phim) {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM LichChieu";
+		Query query = session.createQuery(hql);
+		List<LichChieu> list = query.list();
+		
+		for (LichChieu l : list) {
+			if (l.getDsPhim().getMaPhim().equals(phim.getMaPhim())) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	// Lấy danh sách phim
+	public List<Phim> getDsPhim() {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM Phim";
+		Query query = session.createQuery(hql);
+		List<Phim> list = query.list();
+
+		return list;
+	}
+	
+	// Lấy danh sách loại vé
+	public List<LoaiVe> getLoaiVe() {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM LoaiVe";
+		Query query = session.createQuery(hql);
+		List<LoaiVe> list = query.list();
+
+		return list;
+	}
+
+	@RequestMapping("ticket-config")
+	public String ticketConfig(ModelMap model, HttpServletRequest request, HttpSession ss) {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM GiaVeConfig order by id desc";
+		Query query = session.createQuery(hql);
+		List<GiaVeConfig> list = query.list();
+		
+		List<LoaiVe> listLoaiVe = getLoaiVe();
+		List<Phim> phimS = getDsPhim();
+		List<Phim> phimNewS = new ArrayList<>();
+		for(Phim phim : phimS) {
+			if(getDsPhimByLichChieu(phim)) {
+				phimNewS.add(phim);
+			}
+		}
+
+		model.addAttribute("lve", listLoaiVe);
+		model.addAttribute("lp", phimNewS);
+		model.addAttribute("lv", list);
+
+		return "admin/ticket-config";
 	}
 
 }

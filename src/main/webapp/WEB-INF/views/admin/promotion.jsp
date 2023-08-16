@@ -258,6 +258,13 @@
 																		</div>
 																	</div>
 																	<div class="tieude1-add-e">
+																		<p class="chitiet-left-add-e">Link ảnh</p>
+																		<div class="input-add-e">
+																			<input type="text" name="link" id=""
+																				class="input-name-add-e" required>
+																		</div>
+																	</div>
+																	<div class="tieude1-add-e">
 																		<!-- <div class="detail-info-fix-left"> -->
 																		<span class="chitiet-left-add-e">Ngày Bắt Đầu</span> <input
 																			type="date" name="ngayBatDau"
@@ -373,13 +380,7 @@
 													<div class="body">
 														<div class="body-right">
 															<div class="photo">
-																<i class="fa-solid fa-file-image"
-																	onclick="document.getElementById('fileIput').click();"
-																	style="font-size: 50px"></i>
-															</div>
-
-															<div class="">
-																<button class="button-ma"></button>
+																<img src="${l.link }" style="height: 240px;" />
 															</div>
 															<div class="body-right-detail-info">
 																<p class="detail-info-top-left">Trạng Thái:</p>
@@ -460,7 +461,7 @@
                                                 </div> -->
 									<form class="contener1-fix"
 										action="/QuanLyRapChieuPhim/admin/promotion/update/${l.maKM}.htm"
-										method="post" modelAttribute="updatePromotion">
+										method="post" modelAttribute="promotion">
 										<div class="detail-info-fix">
 											<p class="detail-info-top-fix">Mã Khuyến Mãi</p>
 											<input type="input-name-add-e" name="maKM"
@@ -471,6 +472,11 @@
 											<p class="detail-info-top-fix">Tên Khuyến Mãi</p>
 											<input type="input-name-add-e" name="tenKM"
 												class="detail-info-buton-fix" value="${l.tenKM }" required>
+										</div>
+										<div class="detail-info-fix">
+											<p class="detail-info-top-fix">Link Ảnh Khuyến Mãi</p>
+											<input type="input-name-add-e" name="link"
+												class="detail-info-buton-fix" value="${l.link }" required>
 										</div>
 										<div class="detail-info-fix">
 											<p class="detail-info-top-fix">Mức Giảm Giá</p>
@@ -484,16 +490,13 @@
 												class="detail-info-buton-fix" value="${l.moTa }">
 										</div>
 										<div class="detail-info-fix">
-											<p class="detail-info-top-fix">Mã Trạng Thái</p>
-											<input type="input-name-add-e" name="maTT"
-												class="detail-info-buton-fix" 
-												style="background-color: lightgray;" readOnly value="${l.maTT }">
-										</div>
-										<div class="detail-info-fix">
-											<p class="detail-info-top-fix">Tên Trạng Thái</p>
-											<p class="detail-info-buton-fix"
-												style="background-color: lightgray;" readOnly>
-												${l.maTT==0?"Có hiệu lực":"Hết hiệu lực" }</p>
+											<p class="detail-info-top-fix">Mã Trạng Thái:</p>
+											<select name="maTT" style="height: 30px; width: 240px;">
+												<option value="0">Còn hiệu lực</option>
+												<option value="1">Hết hiệu lực</option>
+
+											</select>
+
 										</div>
 										<div class="detail-info-fix">
 											<p class="detail-info-top-fix">Ngày Bắt Đầu</p>

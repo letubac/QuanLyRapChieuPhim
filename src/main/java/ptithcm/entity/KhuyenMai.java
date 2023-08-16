@@ -50,4 +50,7 @@ public class KhuyenMai {
 	
 	@Column(name="MoTa")
 	private String moTa; // Mô tả chi tiết phim - nvarchar(1000)
+	
+	@Column(name="Link")
+	private String link; // link ảnh - nvarchar(1000)
 }

@@ -26,7 +26,7 @@
 			</a></li>
 			<li class="sidebar-item"><a
 				class="sidebar-link waves-effect waves-dark sidebar-link"
-				href="#" aria-expanded="false"> <i
+				href="http://localhost:8080/QuanLyRapChieuPhim/admin/ticket-config.htm" aria-expanded="false"> <i
 					class="fa-solid fa-exclamation-circle"></i> <span class="hide-menu">Cấu hình giá vé</span>
 			</a></li>
 			<li class="sidebar-item"><a

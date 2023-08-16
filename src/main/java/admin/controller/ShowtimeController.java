@@ -153,14 +153,7 @@ public class ShowtimeController {
 					if (lc.getDsPhong().getMaPhong().equals(maPhong) && lc.getGioChieu().equals(gioChieuI)
 							&& lc.getNgayChieu().equals(ngayChieuDate)) {
 						temp = 0;
-//						System.out.println(i);
-//						i++;
 					}
-//					System.out.println(i+"=>>>>>>");
-//					System.out.println(lc.getDsPhong().getMaPhong());
-//					System.out.println(lc.getGioChieu());
-//					System.out.println(lc.getNgayChieu());
-//					i++;
 				}
 
 				if (temp == 1) {

@@ -190,7 +190,7 @@ public class KhuyenMaiController {
 	
 	@RequestMapping(value = "promotion/update/{maKM}.htm",  method=RequestMethod.POST)
 	public String updatePromotion(ModelMap model, @ModelAttribute("promotion") KhuyenMai promotion, BindingResult result, BindingResult errors,
-			@RequestParam("maKM") String maKM,
+			@RequestParam("maKM") String maKM, @RequestParam("link") String link,
 			@RequestParam("tenKM") String tenKM,@RequestParam("ngayBatDau") String ngayBatDau, @RequestParam("ngayKetThuc") String ngayKetThuc,
 			 @RequestParam("maTT") Integer maTT, @RequestParam("mucGiamGia") String mucGiamGia, 
 			 @RequestParam("moTa") String moTa, RedirectAttributes redirectAttributes) throws ParseException {
@@ -235,7 +235,8 @@ public class KhuyenMaiController {
 				promotion = getSingleKhuyenMai(maKM);
 				promotion.setNgayBatDau(ngayBatDauDate);
 				promotion.setNgayKetThuc(ngayKetThucDate);
-				
+				promotion.setLink(link); 
+				promotion.setMaTT(maTT);
 				session.merge(promotion);
 				redirectAttributes.addFlashAttribute("message",
 						new Message("success","sửa thành công"));
