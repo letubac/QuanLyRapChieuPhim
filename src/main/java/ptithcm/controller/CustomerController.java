@@ -5,10 +5,10 @@ import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -30,6 +30,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import admin.controller.Message;
 import ptithcm.bean.Seat;
+import ptithcm.entity.GiaVeConfig;
+import ptithcm.entity.KhuyenMai;
 import ptithcm.entity.LichChieu;
 import ptithcm.entity.LoaiVe;
 import ptithcm.entity.Phim;
@@ -41,26 +43,25 @@ import ptithcm.entity.Ve;
 @RequestMapping("/customer")
 public class CustomerController {
 	@Autowired
-	SessionFactory factory; 
-	
-	public List<Ve> layLVKH(Integer maKH)
-	{
+	SessionFactory factory;
+
+	public List<Ve> layLVKH(Integer maKH) {
 		Session session = factory.getCurrentSession();
 		String hql = "FROM Ve where maKH = :maKH order by maVe desc ";
 		Query query = session.createQuery(hql);
 		query.setParameter("maKH", maKH);
 		List<Ve> list = query.list();
 		return list;
-	}  
-	
+	}
+
 	@RequestMapping("/account")
 	public String account(ModelMap model, HttpServletRequest request, HttpSession ss) {
 		model.addAttribute("user", LoginController.kh);
 		model.addAttribute("tk", LoginController.taikhoan);
-		//model.addAttribute("lv", LoginController.kh.getVeList());
+		// model.addAttribute("lv", LoginController.kh.getVeList());
 		model.addAttribute("lv", layLVKH(LoginController.kh.getMaKH()));
-		if(LoginController.matKhau.equals("01234567") == true) {
-			model.addAttribute("message","Nhớ thay đổi mật khẩu mới!");		
+		if (LoginController.matKhau.equals("01234567") == true) {
+			model.addAttribute("message", "Nhớ thay đổi mật khẩu mới!");
 		}
 		model.addAttribute("login", true);
 		return "customer/account";
@@ -72,10 +73,10 @@ public class CustomerController {
 			@RequestParam("diaChi") String diaChi, @PathVariable("id") Integer maKH,
 			RedirectAttributes redirectAttributes) throws NoSuchAlgorithmException, ParseException {
 		// NhanVien a = layNhanVien(id);
-		
+
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 		Date ngaySinhDate = formatter.parse(ngaySinh);
-		
+
 		boolean kt = true;
 		if (tenKH.trim().toString().equals("")) {
 			model.addAttribute("errors_tenNV", "Tên khách hàng không được để trống!");
@@ -98,8 +99,7 @@ public class CustomerController {
 			model.addAttribute("tk", LoginController.taikhoan);
 			model.addAttribute("mk", LoginController.matKhau);
 			model.addAttribute("login", true);
-			redirectAttributes.addFlashAttribute("message",
-					new Message("error","Cập nhật thất bại!"));
+			redirectAttributes.addFlashAttribute("message", new Message("error", "Cập nhật thất bại!"));
 			return "redirect:/customer/account.htm";
 		}
 
@@ -126,9 +126,8 @@ public class CustomerController {
 		model.addAttribute("mk", LoginController.matKhau);
 		model.addAttribute("lv", LoginController.kh.getVeList());
 		model.addAttribute("login", true);
-		//model.addAttribute("message", "Cập nhật thành công!");
-		redirectAttributes.addFlashAttribute("message",
-				new Message("success","Cập nhật thành công!"));
+		// model.addAttribute("message", "Cập nhật thành công!");
+		redirectAttributes.addFlashAttribute("message", new Message("success", "Cập nhật thành công!"));
 		return "redirect:/customer/account.htm";
 
 	}
@@ -139,8 +138,8 @@ public class CustomerController {
 	}
 
 	@RequestMapping(value = "/change/password", method = RequestMethod.POST)
-	public String updatePass(ModelMap model, HttpSession ss, HttpServletRequest request,RedirectAttributes redirectAttributes)
-			throws NoSuchAlgorithmException {
+	public String updatePass(ModelMap model, HttpSession ss, HttpServletRequest request,
+			RedirectAttributes redirectAttributes) throws NoSuchAlgorithmException {
 		String oldPass = request.getParameter("oldPass");
 		String newPass = request.getParameter("newPass");
 		String cfnewPass = request.getParameter("confirmPass");
@@ -153,7 +152,7 @@ public class CustomerController {
 			model.addAttribute("message", "Mật khẩu mới không được quá 8 ký tự!");
 			doDL(model);
 			redirectAttributes.addFlashAttribute("message",
-					new Message("error","Mật khẩu mới không được quá 8 ký tự!"));
+					new Message("error", "Mật khẩu mới không được quá 8 ký tự!"));
 			return "redirect:/customer/account.htm";
 		}
 		if (oldPass.equals(LoginController.matKhau)) {
@@ -168,24 +167,22 @@ public class CustomerController {
 				doDL(model);
 				model.addAttribute("login", true);
 				redirectAttributes.addFlashAttribute("message",
-						new Message("error","Mật khẩu xác nhận không giống nhau!"));
+						new Message("error", "Mật khẩu xác nhận không giống nhau!"));
 				return "redirect:/customer/account.htm";
 			}
-			if(newPass.equals("01234567") == true ) {
+			if (newPass.equals("01234567") == true) {
 				model.addAttribute("message", "Không được sử dụng mật khẩu này!");
 				doDL(model);
 				model.addAttribute("login", true);
-				redirectAttributes.addFlashAttribute("message",
-						new Message("error","Sai mật khẩu cũ"));
+				redirectAttributes.addFlashAttribute("message", new Message("error", "Sai mật khẩu cũ"));
 				return "redirect:/customer/account.htm";
-				
+
 			}
 		} else {
 			model.addAttribute("message", "Sai mật khẩu cũ!");
 			doDL(model);
 			model.addAttribute("login", true);
-			redirectAttributes.addFlashAttribute("message",
-					new Message("error","Sai mật khẩu cũ!"));
+			redirectAttributes.addFlashAttribute("message", new Message("error", "Sai mật khẩu cũ!"));
 			return "redirect:/customer/account.htm";
 		}
 		Session session = factory.openSession();
@@ -195,10 +192,9 @@ public class CustomerController {
 			session.update(a);
 			t.commit();
 			model.addAttribute("message", "Cập nhật thành công!");
-			redirectAttributes.addFlashAttribute("message",
-					new Message("success","Cập nhật thành công!"));
+			redirectAttributes.addFlashAttribute("message", new Message("success", "Cập nhật thành công!"));
 			return "redirect:/customer/account.htm";
-			
+
 		} catch (Exception e) {
 			t.rollback();
 			model.addAttribute("message", "Cập nhật thất bại!");
@@ -207,122 +203,154 @@ public class CustomerController {
 		}
 		doDL(model);
 		model.addAttribute("login", true);
-		redirectAttributes.addFlashAttribute("message",
-				new Message("error","Cập nhật thất bại!"));
+		redirectAttributes.addFlashAttribute("message", new Message("error", "Cập nhật thất bại!"));
 		return "redirect:/customer/account.htm";
 	}
 
-	public Phim layPhim(Integer id)
-	{
+	public Phim layPhim(Integer id) {
 		Session session = factory.getCurrentSession();
 		String hql = "FROM Phim where MaPhim = :id";
 		Query query = session.createQuery(hql);
 		query.setParameter("id", id);
-		Phim p = (Phim)query.list().get(0);
+		Phim p = (Phim) query.list().get(0);
 		return p;
 	}
-	
-	public LichChieu layLC(Integer id)
-	{
+
+	public LichChieu layLC(Integer id) {
 		Session session = factory.getCurrentSession();
 		String hql = "FROM LichChieu where MaSuatChieu = :id";
 		Query query = session.createQuery(hql);
 		query.setParameter("id", id);
-		LichChieu lc = (LichChieu)query.list().get(0);
+		LichChieu lc = (LichChieu) query.list().get(0);
 		return lc;
-	} 
-	
-	public LoaiVe layLV(String id)
-	{
+	}
+
+	public LoaiVe layLV(String id) {
 		Session session = factory.getCurrentSession();
 		String hql = "FROM LoaiVe where MaLV = :id";
 		Query query = session.createQuery(hql);
 		query.setParameter("id", id);
-		LoaiVe lv = (LoaiVe)query.list().get(0);
+		LoaiVe lv = (LoaiVe) query.list().get(0);
 		return lv;
-	} 
-	
-	public List<Ve> layVe(Integer id)
-	{
+	}
+
+	public List<Ve> layVe(Integer id) {
 		Session session = factory.getCurrentSession();
 		String hql = "FROM Ve where dsLichChieu.maSC = :id";
 		Query query = session.createQuery(hql);
 		query.setParameter("id", id);
 		List<Ve> list = query.list();
 		return list;
-	} 
+	}
 
 	public Integer layTongGhe(Integer maSC) {
 		LichChieu lc = layLC(maSC);
 		return lc.getDsPhong().getTongSoGhe();
 	}
-	
+
 	public Integer ktGhe(Integer maSC, Integer soGhe) {
-		List<Ve> list= new ArrayList<Ve>();
+		List<Ve> list = new ArrayList<Ve>();
 		list = layVe(maSC);
-		for(Ve u : list) {
-			if(u.getSoGhe() == soGhe) {
-				return u.getKhachHang() != null? u.getKhachHang().getMaKH() : u.getNhanVien().getMaNV();
+		for (Ve u : list) {
+			if (u.getSoGhe() == soGhe) {
+				return u.getKhachHang() != null ? u.getKhachHang().getMaKH() : u.getNhanVien().getMaNV();
 			}
 		}
 		return null;
 	}
-		
-	public List<Seat> listSeat(Integer maSC, Integer maKH){
+
+	public List<Seat> listSeat(Integer maSC, Integer maKH) {
 		List<Seat> list = new ArrayList<Seat>();
-		for(int i=1; i <= layTongGhe(maSC); i++) {
+		for (int i = 1; i <= layTongGhe(maSC); i++) {
 			Seat s = new Seat();
 			s.setNum(i);
-			if(ktGhe(maSC,i) != null) {
-				if(ktGhe(maSC,i) == maKH) {
+			if (ktGhe(maSC, i) != null) {
+				if (ktGhe(maSC, i) == maKH) {
 					s.setStt("Cua ban");
-				}
-				else {
+				} else {
 					s.setStt("Da dat");
 				}
-			}
-			else {
+			} else {
 				s.setStt("Trong");
 			}
 			list.add(s);
 		}
 		return list;
 	}
-	
-	public Phim listPhim(int maPhim)
-	{
+
+	public Phim listPhim(int maPhim) {
 		Session session = factory.getCurrentSession();
 		String hql = "FROM Phim where maPhim = :maPhim";
 		Query query = session.createQuery(hql);
 		query.setParameter("maPhim", maPhim);
-		Phim phim = (Phim)query.list().get(0);
+		Phim phim = (Phim) query.list().get(0);
 		return phim;
 	}
-	
+
+	public List<GiaVeConfig> getGiaVeByMaPhim(int maPhim) {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM GiaVeConfig where maPhim = :maPhim";
+		Query query = session.createQuery(hql);
+		query.setParameter("maPhim", maPhim);
+		List<GiaVeConfig> list = query.list();
+		return list;
+	}
+
+	public LoaiVe getLoaiVeByMaLV(String maLV) {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM LoaiVe where maLV = :maLV";
+		Query query = session.createQuery(hql);
+		query.setParameter("maLV", maLV);
+		LoaiVe lv = (LoaiVe) query.list().get(0);
+		return lv;
+	}
+
+	public KhuyenMai getKhuyenMaiByMaKM(String maKM) {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM KhuyenMai where maKM = :maKM";
+		Query query = session.createQuery(hql);
+		query.setParameter("maKM", maKM);
+		KhuyenMai lv = (KhuyenMai) query.list().get(0);
+		return lv;
+	}
+
 	@SuppressWarnings("deprecation")
 	@RequestMapping("/payment/{maPhim}/{maSC}.htm")
-	public String payment(ModelMap model,@PathVariable("maPhim") Integer maPhim,
-			@PathVariable("maSC") Integer maSC) {
+	public String payment(ModelMap model, @PathVariable("maPhim") Integer maPhim, @PathVariable("maSC") Integer maSC) {
+		if (LoginController.taikhoan.getEmail() == null) {
+			model.addAttribute("login", false);
+			return "login";
+		}
 		doDL(model);
 		Phim p = layPhim(maPhim);
 		LichChieu lc = layLC(maSC);
 		LoaiVe lv;
-		List<Seat> sl= listSeat(maSC,LoginController.kh.getMaKH());
+		List<Seat> sl = listSeat(maSC, LoginController.kh.getMaKH());
 		Phim phim = listPhim(maPhim);
-		if(LoginController.taikhoan.getEmail() == null) {
+
+		// lấy giá vé được config theo ngày kèm khuyến mãi, nếu không được config thì
+		// mặc định lấy giá của phim
+		List<GiaVeConfig> listGV = getGiaVeByMaPhim(phim.getMaPhim());
+		if (Objects.nonNull(listGV)) {
+			for (GiaVeConfig giave : listGV) {
+				if (giave.getNgayApDung().equals(lc.getNgayChieu())) {
+					LoaiVe loaive = getLoaiVeByMaLV(giave.getMaLV());
+					KhuyenMai km = getKhuyenMaiByMaKM(phim.getMaKM());
+					int totalMoney = loaive.getGia() - km.getMucGiamGia();
+					phim.setGiaVe(totalMoney);
+				}
+			}
+		}
+
+//		if(lc.getNgayChieu().getDay() > 0 && lc.getNgayChieu().getDay() < 5) {
+//			lv = layLV("LV01");
+//		}
+//		else {
+//			lv = layLV("LV02");
+//		}
+		if (LoginController.taikhoan.getEmail() == null) {
 			model.addAttribute("login", false);
-			return "login";
-		}
-		if(lc.getNgayChieu().getDay() > 0 && lc.getNgayChieu().getDay() < 5) {
-			lv = layLV("LV01");
-		}
-		else {
-			lv = layLV("LV02");
-		}
-		if(LoginController.taikhoan.getEmail() == null) {
-			model.addAttribute("login", false);
-		}
-		else {
+		} else {
 			model.addAttribute("user", LoginController.kh);
 			model.addAttribute("tk", LoginController.taikhoan);
 			model.addAttribute("lv", LoginController.kh.getVeList());
@@ -331,20 +359,20 @@ public class CustomerController {
 		model.addAttribute("phim", p);
 		model.addAttribute("sl", sl);
 		model.addAttribute("lc", lc);
-		model.addAttribute("lv", lv);
+//		model.addAttribute("lv", lv);
 		model.addAttribute("user", LoginController.kh);
 		return "customer/payment";
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	@RequestMapping("/payment_1/{maSC}/{selectedSeats}.htm")
-	public String payment1(ModelMap model,@PathVariable("maSC") Integer maSC, @PathVariable("selectedSeats") List<Integer> selectedSeats) {
+	public String payment1(ModelMap model, @PathVariable("maSC") Integer maSC,
+			@PathVariable("selectedSeats") List<Integer> selectedSeats) {
 		LoaiVe lv;
 		LichChieu lc = layLC(maSC);
-		if(lc.getNgayChieu().getDay() > 0 && lc.getNgayChieu().getDay() < 5) {
+		if (lc.getNgayChieu().getDay() > 0 && lc.getNgayChieu().getDay() < 5) {
 			lv = layLV("LV01");
-		}
-		else {
+		} else {
 			lv = layLV("LV02");
 		}
 		model.addAttribute("user", LoginController.kh);
@@ -354,55 +382,55 @@ public class CustomerController {
 		model.addAttribute("login", true);
 		return "customer/payment_1";
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	@RequestMapping("/payment_2/{maSC}/{soGhe}.htm")
-	public String payment2(ModelMap model,@PathVariable("maSC") Integer maSC, @PathVariable("soGhe") String[] soGhe) {
+	public String payment2(ModelMap model, @PathVariable("maSC") Integer maSC, @PathVariable("soGhe") String[] soGhe) {
 		Ve v = new Ve();
 		LichChieu lc = layLC(maSC);
 		LoaiVe lv;
 
 		if (lc.getNgayChieu().getDay() > 0 && lc.getNgayChieu().getDay() < 5) {
-		    lv = layLV("LV01");
+			lv = layLV("LV01");
 		} else {
-		    lv = layLV("LV02");
+			lv = layLV("LV02");
 		}
-		
+
 		List<Integer> soGheList = new ArrayList<>();
 		for (String ghe : soGhe) {
-		    String gheTrimmed = ghe.trim();
-		    if (gheTrimmed.startsWith("[")) {
-		        gheTrimmed = gheTrimmed.substring(1); // Loại bỏ ký tự "[" đầu chuỗi
-		    }
-		    if (gheTrimmed.endsWith("]")) {
-		        gheTrimmed = gheTrimmed.substring(0, gheTrimmed.length() - 1); // Loại bỏ ký tự "]" cuối chuỗi
-		    }
-		    int gheInt = Integer.parseInt(gheTrimmed);
-		    soGheList.add(gheInt);
+			String gheTrimmed = ghe.trim();
+			if (gheTrimmed.startsWith("[")) {
+				gheTrimmed = gheTrimmed.substring(1); // Loại bỏ ký tự "[" đầu chuỗi
+			}
+			if (gheTrimmed.endsWith("]")) {
+				gheTrimmed = gheTrimmed.substring(0, gheTrimmed.length() - 1); // Loại bỏ ký tự "]" cuối chuỗi
+			}
+			int gheInt = Integer.parseInt(gheTrimmed);
+			soGheList.add(gheInt);
 		}
-		
-		for (int ghe : soGheList) {
-		    Ve ve = new Ve();
-		    ve.setDsLichChieu(layLC(maSC));
-		    ve.setKhachHang(LoginController.kh);
-		    ve.setLoaiVe(lv);
-		    ve.setNgayBan(new Date());
-		    ve.setSoGhe(ghe);
 
-		    Session session = factory.openSession();
-		    Transaction t = session.beginTransaction();
-		    try {
-		        session.save(ve);
-		        t.commit();
-		    } catch (Exception e) {
-		        t.rollback();
-		        model.addAttribute("user", LoginController.kh);
-		        model.addAttribute("tk", LoginController.taikhoan);
-		        model.addAttribute("message", e.getMessage());
-		        return "redirect: QuanLyRapChieuPhim/customer/payment_1/{maSC}/{soGhe}.htm";
-		    } finally {
-		        session.close();
-		    }
+		for (int ghe : soGheList) {
+			Ve ve = new Ve();
+			ve.setDsLichChieu(layLC(maSC));
+			ve.setKhachHang(LoginController.kh);
+			ve.setLoaiVe(lv);
+			ve.setNgayBan(new Date());
+			ve.setSoGhe(ghe);
+
+			Session session = factory.openSession();
+			Transaction t = session.beginTransaction();
+			try {
+				session.save(ve);
+				t.commit();
+			} catch (Exception e) {
+				t.rollback();
+				model.addAttribute("user", LoginController.kh);
+				model.addAttribute("tk", LoginController.taikhoan);
+				model.addAttribute("message", e.getMessage());
+				return "redirect: QuanLyRapChieuPhim/customer/payment_1/{maSC}/{soGhe}.htm";
+			} finally {
+				session.close();
+			}
 		}
 
 		model.addAttribute("lc", lc);

@@ -31,17 +31,17 @@
 			</a></li>
 			<li class="sidebar-item"><a
 				class="sidebar-link waves-effect waves-dark sidebar-link"
-				href="http://localhost:8080/QuanLyRapChieuPhim/admin/employee.htm"" aria-expanded="false"> <i
+				href="http://localhost:8080/QuanLyRapChieuPhim/admin/employee.htm" aria-expanded="false"> <i
 					class="fa-solid fa-user-group"></i> <span class="hide-menu">Nhân Viên</span>
 			</a></li>
 			<li class="sidebar-item"><a
 				class="sidebar-link waves-effect waves-dark sidebar-link"
-				href="http://localhost:8080/QuanLyRapChieuPhim/admin/customer.htm"" aria-expanded="false"> <i
+				href="http://localhost:8080/QuanLyRapChieuPhim/admin/customer.htm" aria-expanded="false"> <i
 					class="fa-solid fa-users"></i> <span class="hide-menu">Khách Hàng</span>
 			</a></li>
 			<li class="sidebar-item"><a
 				class="sidebar-link waves-effect waves-dark sidebar-link"
-				href="#" aria-expanded="false"> <i
+				href="http://localhost:8080/QuanLyRapChieuPhim/admin/theater.htm" aria-expanded="false"> <i
 					class="fa-solid fa-building"></i> <span class="hide-menu">Quản Lý Cụm Rạp</span>
 			</a></li>
 			<li class="sidebar-item"><a

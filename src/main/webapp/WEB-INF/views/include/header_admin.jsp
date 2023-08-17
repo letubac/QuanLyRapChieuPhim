@@ -15,14 +15,14 @@
                         <!-- Logo icon -->
                         <b class="logo-icon">
                             <!-- Dark Logo icon -->
-                            <img src="http://localhost:8080/QuanLyRapChieuPhim/resources/imgs/logo-icon.png" alt="homepage" />
+                            <img src="http://localhost:8080/QuanLyRapChieuPhim/resources/imgs/b.png" alt="homepage" />
                         </b>
                         <!--End Logo icon -->
                         <!-- Logo text -->
-                        <span class="logo-text">
-                            <!-- dark Logo text -->
-                            <img src="http://localhost:8080/QuanLyRapChieuPhim/resources/imgs/logo-text.png" alt="homepage" />
-                        </span>
+                        <!-- <span class="logo-text">
+                            dark Logo text
+                            <img src="http://localhost:8080/QuanLyRapChieuPhim/resources/imgs/d.png" alt="homepage" />
+                        </span> -->
                     </a>
                     <!-- ============================================================== -->
                     <!-- End Logo -->

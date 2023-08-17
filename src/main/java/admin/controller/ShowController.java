@@ -92,6 +92,10 @@ public class ShowController {
 	@SuppressWarnings("deprecation")
 	@RequestMapping("dashboard")
 	public String dashboard(ModelMap model) {
+		if(LoginController.taikhoan.getEmail() == null) {
+			model.addAttribute("login", false);
+			return "login";
+		}
 		int countUser = getUsers().size();
 		int countVe = getVes().size();
 		int countPhim = getPhims().size();
@@ -126,6 +130,10 @@ public class ShowController {
 
 	@RequestMapping("profile")
 	public String profile(ModelMap model, HttpSession ss) {
+		if(LoginController.taikhoan.getEmail() == null) {
+			model.addAttribute("login", false);
+			return "login";
+		}
 		model.addAttribute("tk", LoginController.taikhoan);
 		model.addAttribute("user", LoginController.nv);
 		model.addAttribute("mk", LoginController.matKhau);
@@ -134,6 +142,10 @@ public class ShowController {
 
 	@RequestMapping(value = "employee", method = RequestMethod.GET)
 	public String employee(ModelMap model, HttpServletRequest request, HttpSession ss) {
+		if(LoginController.taikhoan.getEmail() == null) {
+			model.addAttribute("login", false);
+			return "login";
+		}
 		HttpSession session = request.getSession();
 		if (session.getAttribute("user") == null) {
 			model.addAttribute("user", LoginController.nv);
@@ -191,6 +203,10 @@ public class ShowController {
 
 	@RequestMapping("customer")
 	public String customer(ModelMap model, HttpServletRequest request, HttpSession ss) {
+		if(LoginController.taikhoan.getEmail() == null) {
+			model.addAttribute("login", false);
+			return "login";
+		}
 		Session session = factory.getCurrentSession();
 		String hql = "FROM KhachHang";
 		Query query = session.createQuery(hql);
@@ -211,6 +227,10 @@ public class ShowController {
 
 	@RequestMapping("type")
 	public String type(ModelMap model, HttpServletRequest request, HttpSession ss) {
+		if(LoginController.taikhoan.getEmail() == null) {
+			model.addAttribute("login", false);
+			return "login";
+		}
 		Session session = factory.getCurrentSession();
 		String hql = "FROM ChiTietTheLoai";
 		Query query = session.createQuery(hql);
@@ -230,6 +250,10 @@ public class ShowController {
 
 	@RequestMapping("movie")
 	public String movie(ModelMap model, HttpServletRequest request, HttpSession ss) {
+		if(LoginController.taikhoan.getEmail() == null) {
+			model.addAttribute("login", false);
+			return "login";
+		}
 		Session session = factory.getCurrentSession();
 		String hql = "FROM Phim order by MaPhim desc";
 		Query query = session.createQuery(hql);
@@ -260,6 +284,10 @@ public class ShowController {
 
 	@RequestMapping("ticket")
 	public String ticket(ModelMap model, HttpServletRequest request, HttpSession ss) {
+		if(LoginController.taikhoan.getEmail() == null) {
+			model.addAttribute("login", false);
+			return "login";
+		}
 		Session session = factory.getCurrentSession();
 		String hql = "FROM LoaiVe";
 		Query query = session.createQuery(hql);
@@ -271,6 +299,10 @@ public class ShowController {
 
 	@RequestMapping("room")
 	public String room(ModelMap model, HttpServletRequest request, HttpSession ss) {
+		if(LoginController.taikhoan.getEmail() == null) {
+			model.addAttribute("login", false);
+			return "login";
+		}
 		Session session = factory.getCurrentSession();
 		String hql = "FROM PhongChieu";
 		Query query = session.createQuery(hql);
@@ -282,6 +314,10 @@ public class ShowController {
 
 	@RequestMapping("tickets")
 	public String tickets(ModelMap model, HttpServletRequest request, HttpSession ss) {
+		if(LoginController.taikhoan.getEmail() == null) {
+			model.addAttribute("login", false);
+			return "login";
+		}
 		Session session = factory.getCurrentSession();
 		String hql = "FROM LoaiVe";
 		Query query = session.createQuery(hql);
@@ -293,6 +329,10 @@ public class ShowController {
 
 	@RequestMapping("order")
 	public String order(ModelMap model, HttpServletRequest request, HttpSession ss) {
+		if(LoginController.taikhoan.getEmail() == null) {
+			model.addAttribute("login", false);
+			return "login";
+		}
 		Session session = factory.getCurrentSession();
 		String hql = "FROM Ve";
 		Query query = session.createQuery(hql);
@@ -350,6 +390,10 @@ public class ShowController {
 
 	@RequestMapping("showtimes")
 	public String showtimes(ModelMap model, HttpServletRequest request, HttpSession ss) {
+		if(LoginController.taikhoan.getEmail() == null) {
+			model.addAttribute("login", false);
+			return "login";
+		}
 		Session session = factory.getCurrentSession();
 		String hql = "FROM LichChieu";
 		Query query = session.createQuery(hql);
@@ -376,6 +420,10 @@ public class ShowController {
 	@SuppressWarnings("null")
 	@RequestMapping("promotion")
 	public String khuyenmai(ModelMap model, HttpServletRequest request, HttpSession ss) {
+		if(LoginController.taikhoan.getEmail() == null) {
+			model.addAttribute("login", false);
+			return "login";
+		}
 		Session session = factory.getCurrentSession();
 		String hql = "FROM KhuyenMai";
 		Query query = session.createQuery(hql);
@@ -445,6 +493,10 @@ public class ShowController {
 
 	@RequestMapping("ticket-config")
 	public String ticketConfig(ModelMap model, HttpServletRequest request, HttpSession ss) {
+		if(LoginController.taikhoan.getEmail() == null) {
+			model.addAttribute("login", false);
+			return "login";
+		}
 		Session session = factory.getCurrentSession();
 		String hql = "FROM GiaVeConfig order by id desc";
 		Query query = session.createQuery(hql);
@@ -464,6 +516,16 @@ public class ShowController {
 		model.addAttribute("lv", list);
 
 		return "admin/ticket-config";
+	}
+	
+	@RequestMapping("theater")
+	public String theater(ModelMap model, HttpServletRequest request, HttpSession ss) {
+		if(LoginController.taikhoan.getEmail() == null) {
+			model.addAttribute("login", false);
+			return "login";
+		}
+
+		return "admin/theater";
 	}
 
 }
