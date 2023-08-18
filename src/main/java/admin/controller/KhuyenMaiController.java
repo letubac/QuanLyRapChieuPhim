@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -50,13 +51,17 @@ public class KhuyenMaiController {
 		String hql = "FROM Phim";
 		Query query = session.createQuery(hql);
 		List<Phim> list = query.list();
-
+		
+		//lấy danh sách phim có maKM
+//		List<Phim> newP = list.stream().filter(item -> maKM.equals(item.getMaKM())).collect(Collectors.toList());
 		for (Phim l : list) {
 			if (l.getMaKM().equals(maKM)) {
 				return 1;
 			}
 		}
-
+		
+		
+		
 		return 0;
 	}
 

@@ -14,5 +14,14 @@
 	<classpathentry kind="lib" path="C:/Users/UNIT/Downloads/junit-4.13.2.jar"/>
 	<classpathentry kind="lib" path="F:/PreSale/.metadata/.plugins/org.eclipse.jdt.junit.core"/>
 	<classpathentry kind="lib" path="F:/Sale_Finance/sfapi/lombok.jar"/>
+	<classpathentry kind="lib" path="C:/Users/UNIT/.m2/repository/com/lowagie/itext/2.1.7.js6/itext-2.1.7.js6.jar">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="maven.groupId" value="com.lowagie"/>
+			<attribute name="maven.artifactId" value="itext"/>
+			<attribute name="maven.version" value="2.1.7.js6"/>
+			<attribute name="maven.scope" value="compile"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
