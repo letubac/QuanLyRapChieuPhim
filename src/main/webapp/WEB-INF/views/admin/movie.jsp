@@ -248,7 +248,7 @@
 																		</div>
 																		<div class="detail-info-add">
 																			<p class="detail-info-top-add">Mã Khuyến Mãi</p>
-																			<select class="detail-info-buton-fix" name="maPhim">
+																			<select class="detail-info-buton-fix" name="maKM">
 																				<option value=''>---No---</option>
 																				<c:forEach var="km" items="${km}">
 																					<option value=${km.maKM }>${km.maKM }</option>

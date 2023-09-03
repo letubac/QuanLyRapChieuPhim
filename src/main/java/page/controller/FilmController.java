@@ -174,5 +174,28 @@ public class FilmController {
 		
 		return "movie/detail";
 	}
+	
+	@RequestMapping("/promotion")
+    public String promotion(ModelMap model,HttpServletRequest request,HttpSession ss) {
+        Session session = factory.getCurrentSession(); 
+        return "movie/promotion";
+    }
+    
+    @RequestMapping("/advertisement")
+    public String advertisement(ModelMap model,HttpServletRequest request,HttpSession ss) {
+        Session session = factory.getCurrentSession(); 
+        return "movie/advertisement";
+    }
+    
+    @RequestMapping("/inf_pro")
+    public String inf_pro(ModelMap model) {
+        if(LoginController.taikhoan.getEmail() == null) {
+            model.addAttribute("login", false);
+        }
+        else {
+            model.addAttribute("login", true);
+        }
+        return "home_event/inf_pro";
+    }
 }
 

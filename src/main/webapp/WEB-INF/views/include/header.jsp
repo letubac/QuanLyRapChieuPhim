@@ -14,6 +14,10 @@
 					class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
 					<li><a href="http://localhost:8080/QuanLyRapChieuPhim/home.htm" class="nav-link px-2 text-white">Trang chủ</a></li>
 					<li><a href="http://localhost:8080/QuanLyRapChieuPhim/film/showing.htm" class="nav-link px-2 text-white">Phim</a></li>
+					<li><a href="http://localhost:8080/QuanLyRapChieuPhim/film/promotion.htm" class="nav-link px-2 text-white">Khuyến mãi | sự kiện</a></li>
+					<li><a href="http://localhost:8080/QuanLyRapChieuPhim/film/advertisement.htm" class="nav-link px-2 text-white">Dịch vụ quảng cáo</a></li>
+					<li><a href="http://localhost:8080/QuanLyRapChieuPhim/film/advertisement.htm" class="nav-link px-2 text-white">Tuyển dụng</a></li>
+					<li><a href="http://localhost:8080/QuanLyRapChieuPhim/film/inf_pro.htm" class="nav-link px-2 text-white">Về chúng tôi</a></li>
 					<!-- <li><a href="#" class="nav-link px-2 text-white">Thức ăn</a></li>
 					<li><a href="#" class="nav-link px-2 text-white">Vé của tôi</a></li>-->
 				</ul>

@@ -33,6 +33,15 @@ hr{
     grid-template-columns: repeat(3, 1fr);
     grid-column-gap: 30px;
 }
+.container-movie-1 {
+    width: 100%;
+    margin: 50px 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 30px;
+    padding: 0 200px; /* Thêm lề bên trái và bên phải tùy theo yêu cầu */
+    box-sizing: border-box; /* Đảm bảo lề và padding không tác động vào chiều ngang tổng thể */
+}
 .link-container{
     max-width: 100%;
     margin: 0px 260px 20px 260px;
@@ -152,4 +161,14 @@ hr{
     .link-container{
         margin: 20px 80px;
         }
+}
+
+.page--news .list--news .news--item {
+    display: inline-block;
+    margin-bottom: 28px;
+    max-width: 270px;
+    height: auto;
+    font-family: 'Roboto', sans-serif;
+    background: #172029;
+    text-align: left;
 }
